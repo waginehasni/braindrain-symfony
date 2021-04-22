@@ -1,0 +1,30 @@
+
+
+<h1 align="center"> Liste des Reservation</h1>
+
+<table class="table table-bordered"  width="100%" cellspacing="0" id="tableac">
+
+    <tr>
+        <th>Numero Salles</th>
+        <th>Specialite</th>
+        <th>Date</th>
+        <th>Horraire</th>
+        <th>Duree</th>
+    </tr>
+    <tbody>
+    {% for i in reservation %}
+        <tr>
+            <td>{{ i.numsalles }}</td>
+
+            <td>{{ i.specialite }}</td>
+            <td>{{ i.date | date('d/m/y') }}</td>
+            <td>{{ i.horraire }}</td>
+            <td>{{ i.duree }}</td>
+
+
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+

@@ -1,0 +1,69 @@
+{% extends 'back/index.html.twig' %}
+{% block body %}
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <center><input type="text" id="search" placeholder="CHERCHER Reservation..."></center>
+    <center>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="table-responsive" id="source0">
+                    <table class="table table-bordered"  width="100%" cellspacing="0" id="tableac">
+
+                        <tr>
+                            <th>Numero salles</th>
+                            <th>Specialite</th>
+                            <th>Date</th>
+                            <th>Horraire</th>
+                            <th>Duree</th>
+                        </tr>
+                        <tbody>
+                        {% for i in reservation %}
+                            <tr>
+                                <td>{{ i.numsalles }}</td>
+
+                                <td>{{ i.specialite }}</td>
+                                <td>{{ i.date | date('d/m/y') }}</td>
+                                <td>{{ i.horraire }}</td>
+                                <td>{{ i.duree }}</td>
+                                <td><a href="{{path("delete",{'numreservation':i.numreservation})}}">supprimer</a>
+                                </td>
+                                <td><a href="{{path("update",{'numreservation':i.numreservation})}}">modifier</a>
+                                </td>
+
+                                <script>
+                                    $(document).ready(function(){
+                                        $('#search').keyup(function(){
+                                            search_table($(this).val());
+                                        });
+                                        function search_table(value){
+                                            $('#tableac tbody tr').each(function(){
+                                                var found = 'false';
+                                                $(this).each(function(){
+                                                    if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                                                    {
+                                                        found = 'true';
+                                                    }
+                                                });
+                                                if(found == 'true')
+                                                {
+                                                    $(this).show();
+
+                                                }
+                                                else
+                                                {
+                                                    $(this).hide();
+
+                                                }
+                                            });
+                                        }
+                                    });
+                                </script>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <a href="{{path('reservationPDF')}}"> Imprimer</a>
+    </center>
+{% endblock %}

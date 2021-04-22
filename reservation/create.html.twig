@@ -1,0 +1,55 @@
+
+{% extends 'back/index.html.twig' %}
+{% block body %}
+        <h2 class="text-center">  Ajouter Reservation</h2>
+    {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+    <div class="row col-md-8 mx-auto my-3">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.numsalles) }}
+                {{ form_widget(form.numsalles, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.numsalles) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.specialite) }}
+                {{ form_widget(form.specialite, {
+                    'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.specialite) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.date) }}
+                {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.date) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.horraire) }}
+                {{ form_widget(form.horraire, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.horraire) }}
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                {{ form_label(form.duree) }}
+                {{ form_widget(form.duree, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.duree) }}
+            </div>
+        </div>
+
+        <div class="col-md-12 pt-2">
+            <div class="form-group">
+                {{ form_widget(form.ajouter, {
+                    'attr': {
+                        'class': 'submitBnt btn btn-primary btn-block mx-auto','style':'width: 300px;'
+                    }}) }}
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}
