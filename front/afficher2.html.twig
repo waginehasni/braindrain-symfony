@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="table-responsive" id="source0">
+                <table class="table table-bordered"  width="100%" cellspacing="0" id="tableac">
+
+                    <tr>
+                        <th>Numero reservation</th>
+                        <th>Nom Cours</th>
+                        <th>Nom Coach</th>
+                        <th>Type</th>
+                        <th>Prix</th>
+                    </tr>
+                    <tbody>
+                    {% for i in cours %}
+                        <tr>
+                            <td>{{ i.numreservation }}</td>
+                            <td>{{ i.nomcours }}</td>
+                            <td>{{ i.nomcoach}}</td>
+                            <td>{{ i.type }}</td>
+                            <td>{{ i.prix }}</td>
+
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </center>
+{% endblock %}

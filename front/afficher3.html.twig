@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="table-responsive" id="source0">
+                <table class="table table-bordered"  width="100%" cellspacing="0" id="tableac">
+
+                    <tr>
+                        <th>Numero salles</th>
+                        <th>Specialite</th>
+                        <th>Date</th>
+                        <th>Horraire</th>
+                        <th>Duree</th>
+                    </tr>
+                    <tbody>
+                    {% for i in reservation %}
+                        <tr>
+                            <td>{{ i.numsalles }}</td>
+
+                            <td>{{ i.specialite }}</td>
+                            <td>{{ i.date | date('d/m/y') }}</td>
+                            <td>{{ i.horraire }}</td>
+                            <td>{{ i.duree }}</td>
+
+
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </center>
+{% endblock %}
