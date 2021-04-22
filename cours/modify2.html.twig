@@ -1,0 +1,55 @@
+
+{% extends 'back/index.html.twig' %}
+{% block body %}
+    <h2 class="text-center">  Modifier Cours</h2>
+    {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+    <div class="row col-md-8 mx-auto my-3">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.numreservation) }}
+                {{ form_widget(form.numreservation, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.numreservation) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.nomcours) }}
+                {{ form_widget(form.nomcours, {
+                    'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.nomcours) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.nomcoach) }}
+                {{ form_widget(form.nomcoach, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.nomcoach) }}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.type) }}
+                {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.type) }}
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                {{ form_label(form.prix) }}
+                {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.prix) }}
+            </div>
+        </div>
+
+        <div class="col-md-12 pt-2">
+            <div class="form-group">
+                {{ form_widget(form.modifier, {
+                    'attr': {
+                        'class': 'submitBnt btn btn-primary btn-block mx-auto','style':'width: 300px;'
+                    }}) }}
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}

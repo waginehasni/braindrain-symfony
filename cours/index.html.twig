@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <center>
+        <body>
+        <ul>
+            {% for appointment in cours %}
+
+                <li>
+                    <font size="+6"> <h style="color:lightcoral;" font-size: 20em>Nom Cours:</h> </font><td>  </td> <font size="+6"> {{ appointment.nomcours }}</font>
+                </li>
+                <li>
+                    <font size="+6">  <h style="color:lightcoral;">Nom Coach:</h> </font><td>  </td> <font size="+6">{{ appointment.nomcoach }}</font>
+                </li>
+                <li>
+                    <font size="+6">  <h style="color:lightcoral;">TYPE:</h> </font><td>  </td><font size="+6">{{ appointment.type }}</font>
+                </li>
+                <li>
+                    <font size="+6"> <h style="color:lightcoral;">PRIX:</h></font><td>  </td> <font size="+6">{{ appointment.prix }} <td>DT</td></font>
+                </li>
+
+
+            {% endfor %}
+        </ul>
+
+        <div class="navigation">
+            {{ knp_pagination_render(cours) }}
+        </div>
+
+        </body>
+        </html>
+    </center>
+{% endblock %}

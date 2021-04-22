@@ -1,0 +1,74 @@
+{% extends 'back/index.html.twig' %}
+{% block body %}
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <center><input type="text" id="search" placeholder="CHERCHER Cours..."></center>
+    <center>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="table-responsive" id="source0">
+                    <table class="table table-bordered"  width="100%" cellspacing="0" id="tableac">
+
+                        <tr>
+
+                            <th>Numero reservation</th>
+                            <th>Nom cours</th>
+                            <th>Nom coach</th>
+                            <th>Type</th>
+                            <th>Prix</th>
+                        </tr>
+                        <tbody>
+                        {% for i in cours %}
+                            <tr>
+                                <td>{{ i.numreservation }}</td>
+
+                                <td>{{ i.nomcours }}</td>
+
+                                <td>{{ i.nomcoach }}</td>
+                                <td>{{ i.type }}</td>
+                                <td>{{ i.prix }}</td>
+                                <td><a href="{{path("delete2",{'numcours':i.numcours})}}">supprimer</a>
+                                </td>
+                                <td><a href="{{path("update2",{'numcours':i.numcours})}}">modifier</a>
+                                </td>
+
+                                <script>
+                                    $(document).ready(function(){
+                                        $('#search').keyup(function(){
+                                            search_table($(this).val());
+                                        });
+                                        function search_table(value){
+                                            $('#tableac tbody tr').each(function(){
+                                                var found = 'false';
+                                                $(this).each(function(){
+                                                    if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                                                    {
+                                                        found = 'true';
+                                                    }
+                                                });
+                                                if(found == 'true')
+                                                {
+                                                    $(this).show();
+
+                                                }
+                                                else
+                                                {
+                                                    $(this).hide();
+
+                                                }
+                                            });
+                                        }
+                                    });
+                                </script>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <a href="{{path('coursPDF')}}"> Imprimer</a>
+
+    </center>
+{% endblock %}
