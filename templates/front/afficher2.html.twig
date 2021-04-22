@@ -1,0 +1,37 @@
+{% extends 'index.html.twig' %}
+{% block body %}
+
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="table-responsive" id="source0">
+                <table class="table table-bordered"  width="100%" cellspacing="0" id="tableac">
+
+                    <tr>
+                        <th>libelle</th>
+                        <th>Type</th>
+                        <th>quantites</th>
+                        <th>prix</th>
+
+                    </tr>
+                    <tbody>
+                    {% for i in produits %}
+                        <tr>
+                            <td>{{ i.libelle }}</td>
+
+                            <td>{{ i.type }}</td>
+                            <td>{{ i.quantites }}</td>
+                            <td>{{ i.prix }}</td>
+
+
+
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </center>
+{% endblock %}

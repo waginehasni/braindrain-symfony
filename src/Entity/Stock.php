@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Stock
  *
  * @ORM\Table(name="stock")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\StockRepository")
  */
 class Stock
 {
@@ -30,7 +32,7 @@ class Stock
 
     /**
      * @var int
-     *
+     *@Assert\Range(min=10,max=350)
      * @ORM\Column(name="quantitesstock", type="integer", nullable=false)
      */
     private $quantitesstock;

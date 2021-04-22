@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stock index{% endblock %}
+
+{% block body %}
+    <h1>Stock index</h1>
+
+    <input class="col-10" type="text" name="AfficherClasse" onkeyup="myFunction()" placeholder="Nom (EX:yassine)"id="myInput">
+<a href="{{path('TrierParQuantites') }}"><i class="align-middle" ></i>  Trier </a>
+
+<table class="table">
+    <table class="table" id="mytable">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Idp</th>
+                <th>Quantitesstock</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stock in stocks %}
+            <tr>
+                <td>{{ stock.id }}</td>
+                <td>{{ stock.idp }}</td>
+                <td>{{ stock.quantitesstock }}</td>
+                <td>{{ stock.date ? stock.date|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('stock_show', {'id': stock.id}) }}">show</a>
+                    <a href="{{ path('stock_edit', {'id': stock.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('stock_new') }}">Create new</a>
+    <script>
+
+
+        id="mytable"
+        function myFunction() {
+            var input, filter, table, tr, td, i,j, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("mytable");
+            tr = table.getElementsByTagName("tr");
+//   alert(td.length);
+            for (i = 0; i < tr.length; i++) {
+                td= tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+
+    </script>
+{% endblock %}
