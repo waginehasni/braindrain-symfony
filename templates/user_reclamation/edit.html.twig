@@ -1,0 +1,23 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Edit Reclamation{% endblock %}
+
+{% block body %}
+    {% block content %}
+<div class="container">
+        <h1>Modifier Reclamation</h1>
+        {% for message in app.flashes('info') %}
+            <div class="alert alert-danger"
+                 style="width: 100%;text-align: center;font-size: 30px;font-weight: bolder;">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+
+    {{ include('user_reclamation/_form.html.twig', {'button_label': 'Update'}) }}
+    <a href="{{ path('user_reclamation_index') }}" class="btn btn-sm btn-info">back to list</a>
+
+    {{ include('user_reclamation/_delete_form.html.twig') }}
+</div>
+{% endblock %}
+{% endblock %}

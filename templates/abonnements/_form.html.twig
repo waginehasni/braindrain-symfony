@@ -1,0 +1,18 @@
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<div class="col-md-6">
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form.type) }}
+        {{ form_errors(form.dateexpiration) }}
+        {{ form_errors(form.validite) }}
+    </div>
+    {{ form_label(form.type, 'Type *') }}
+    {{ form_widget(form.type,  {'attr': {'class': 'form-control resume'}}) }}
+    {{ form_label(form.dateexpiration, 'Date Expiration *') }}
+    {{ form_widget(form.dateexpiration,  {'attr': {'class': 'form-control resume'}}) }}
+    {{ form_label(form.validite, 'Validité * ') }}
+    {{ form_widget(form.validite,  {'attr': {'class': 'form-control resume'}}) }}
+
+    <br>
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+</div>
+{{ form_end(form) }}

@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Reclamation
  *
- * @ORM\Table(name="reclamation")
- * @ORM\Entity
+ * @ORM\Table(name="Reclamation")
+ * @ORM\Entity(repositoryClass="App\Repository\ReclamationRepository")
  */
 class Reclamation
 {
@@ -32,6 +33,16 @@ class Reclamation
      * @var string|null
      *
      * @ORM\Column(name="titre", type="string", length=255, nullable=true)
+     *  @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Titre trop court",
+     *      maxMessage = "titre ne doit pas dépasser 50 caractères"
+     * )
+     * @Assert\NotBlank(
+     *     message=" Veuillez donner un titre pour votre réclamation"
+     * )
+     *
      */
     private $titre;
 
@@ -39,15 +50,24 @@ class Reclamation
      * @var string|null
      *
      * @ORM\Column(name="description", type="string", length=5000, nullable=true)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 5000,
+     *      minMessage = "Description trop court",
+     *      maxMessage = "Description ne doit pas dépasser 5000 caractères"
+     * )
+     * @Assert\NotBlank(
+     *     message=" Veuillez donner la description pour votre réclamation"
+     * )
      */
     private $description;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateReponse", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="dateReponse", type="date", nullable=true)
      */
-    private $datereponse = 'CURRENT_TIMESTAMP';
+    private $datereponse;
 
     /**
      * @var string|null
@@ -60,15 +80,21 @@ class Reclamation
      * @var string|null
      *
      * @ORM\Column(name="reponse", type="string", length=500, nullable=true)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 5000,
+     *      minMessage = "Reponse trop court",
+     *      maxMessage = "Reponse ne doit pas dépasser 5000 caractères"
+     * )
      */
     private $reponse;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateReclamation", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="dateReclamation", type="datetime", nullable=true)
      */
-    private $datereclamation = 'CURRENT_TIMESTAMP';
+    private $datereclamation;
 
     /**
      * @var string|null

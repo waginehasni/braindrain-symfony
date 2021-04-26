@@ -1,0 +1,32 @@
+{% extends 'basefront.html.twig' %}
+{% block body2 %}
+    {{ form_start(form) }}
+    <div class="card-body">
+        <div class="form-group">
+            <label>Type d'abonnement</label>
+            {{ form(form.type) }}
+        </div>
+        <div class="form-group">
+            <label>Date de création </label>
+            {{ form(form.dateCreation) }}
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="">
+                    <label>Date d'expiration </label>
+                    {{ form(form.dateExpiration) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                <div class="custom-file">
+                    {{ form(form.validite) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}

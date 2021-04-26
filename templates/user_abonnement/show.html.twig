@@ -1,0 +1,42 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Abonnement{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container">
+    <h1>Abonnement</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ abonnement.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ abonnement.type }}</td>
+            </tr>
+            <tr>
+                <th>Datecreation</th>
+                <td>{{ abonnement.datecreation ? abonnement.datecreation|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Dateexpiration</th>
+                <td>{{ abonnement.dateexpiration ? abonnement.dateexpiration|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Validite</th>
+                <td>{{ abonnement.validite }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('user_abonnement_index') }}" class="btn btn-sm btn-info">back to list</a>
+
+    <a href="{{ path('user_abonnement_edit', {'id': abonnement.id}) }}" class="btn btn-sm btn-warning">edit</a>
+
+    {{ include('user_abonnement/_delete_form.html.twig') }}
+        </div>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Reclamation{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container">
+        <h1>Reclamation</h1>
+
+        <table class="table">
+            <tbody>
+
+            <tr>
+                <th>Titre</th>
+                <td>{{ reclamation.titre }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ reclamation.description }}</td>
+            </tr>
+            <tr>
+                <th>Datereponse</th>
+                <td>{{ reclamation.datereponse ? reclamation.datereponse|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ reclamation.etat }}</td>
+            </tr>
+            <tr>
+                <th>Reponse</th>
+                <td>{{ reclamation.reponse }}</td>
+            </tr>
+            <tr>
+                <th>Datereclamation</th>
+                <td>{{ reclamation.datereclamation ? reclamation.datereclamation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            {% if reclamation.image != "" %}
+                <tr>
+                    <th>Image</th>
+                    <td><img src="\frontend\images\upload\{{ reclamation.image }}" alt="" class="img-fluid mx-auto d-block"></td>
+                </tr>                {% endif %}
+            {% if reclamation.image == "" %}
+                <tr>
+                    <th>Image</th>
+                    <td> <img src="\frontend\images\upload\noimagefound.png" alt="" class="img-fluid mx-auto d-block"></td>
+                </tr>
+            {% endif %}
+            <tr>
+                <th>Satisfaction</th>
+                <td>{{ reclamation.satisfaction }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="{{ path('user_reclamation_index') }}" class="btn btn-sm btn-info">back to list</a>
+        {% if reclamation.etat == "actif" %}
+        <a href="{{ path('user_reclamation_edit', {'id': reclamation.id}) }}" class="btn btn-sm btn-warning">edit</a>
+        {% endif %}
+        {{ include('user_reclamation/_delete_form.html.twig') }}
+        </div>
+        <br>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}New Reclamation{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container">
+        <div class="form-group">
+        <h1 style="margin-left: 15px">Ajouter nouvelle Reclamation</h1>
+            {% for message in app.flashes('info') %}
+                <div class="alert alert-danger"
+                     style="width: 100%;text-align: center;font-size: 30px;font-weight: bolder;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {{ include('user_reclamation/_form.html.twig') }}
+
+
+        </div>
+
+        <a href="{{ path('user_reclamation_index') }}" class="btn btn-info" style="margin-left: 15px">Retour à la liste</a>
+        <br>
+<br>
+        </div>
+    {% endblock %}
+{% endblock %}

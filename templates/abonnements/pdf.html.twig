@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% block b %}
+<h1 align ="center">Abonnements</h1><hr>
+<style>
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<table class="table" border=" 1px solid" align="center" border-collapse="collapse" border-spacing="0" width="100%" >
+    <thead>
+    <tr>
+        {# <th>IdRec</th>#}
+        <th style="background-color: #f2f2f2">Type</th>
+        <th style="background-color: #f2f2f2">Date creation</th>
+        <th style="background-color: #f2f2f2">Date expiration</th>
+        <th style="background-color: #f2f2f2">Validite</th>
+        {#<th>Actions</th>#}
+    </tr>
+    </thead>
+    <tbody>
+    {% for abonnement in abonnements %}
+        <tr>
+            <td>{{ abonnement.type }}</td>
+            <td>{{ abonnement.datecreation ? abonnement.datecreation|date('Y-m-d') : '' }}</td>
+            <td>{{ abonnement.dateexpiration ? abonnement.dateexpiration|date('Y-m-d') : '' }}</td>
+            <td>{{ abonnement.validite }}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">Pas de résultat</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,17 @@
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<div class="col-md-6">
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form.titre) }}
+        {{ form_errors(form.description) }}
+    </div>
+    {{ form_label(form.titre, 'Titre *') }}
+    {{ form_widget(form.titre,  {'attr': {'class': 'form-control resume'}}) }}
+    {{ form_label(form.titre, 'Description *') }}
+    {{ form_widget(form.description,  {'attr': {'class': 'form-control resume'}}) }}
+    {{ form_label(form.image, 'Image ') }}
+    {{ form_widget(form.image,  {'attr': {'class': 'form-control resume'}}) }}
+
+<br>
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+</div>
+{{ form_end(form) }}

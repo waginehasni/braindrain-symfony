@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% block b %}
+<h1 align ="center">Reclamations</h1><hr>
+<style>
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+<div class="company-logo-img">
+        <img src="classe.jpg" alt="" class="img-fluid mx-auto d-block">
+</div>
+
+<table class="table" border=" 1px solid" align="center" border-collapse="collapse" border-spacing="0" width="100%" >
+    <thead>
+    <tr>
+        {# <th>IdRec</th>#}
+        <th style="background-color: #f2f2f2">Titre</th>
+        <th style="background-color: #f2f2f2">Description</th>
+        <th style="background-color: #f2f2f2">Etat</th>
+        <th style="background-color: #f2f2f2">Reponse</th>
+        <th style="background-color: #f2f2f2">Date reclamation</th>
+        <th style="background-color: #f2f2f2">Date reponse</th>
+        {#<th>Actions</th>#}
+    </tr>
+    </thead>
+    <tbody>
+    {% for reclamation in reclamations %}
+        <tr>
+            {#<td>{{ reclamation.idRec }}</td>#}
+            <td>{{ reclamation.titre }}</td>
+            <td>{{ reclamation.description }}</td>
+            <td>{{ reclamation.etat }}</td>
+            <td>{{ reclamation.reponse }}</td>
+            <td>{{ reclamation.datereclamation ? reclamation.datereclamation|date('Y-m-d H:i:s') : '' }}</td>
+            <td>{{ reclamation.datereponse ? reclamation.datereponse|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

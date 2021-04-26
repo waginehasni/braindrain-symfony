@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Abonnement index{% endblock %}
+
+{% block body %}
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+
+
+        <!-- Topbar Search -->
+        <form
+                class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                       aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <form method="post" action="{{ path('trierabonnements') }}" >
+            <select name="trie">
+                <option value="moins">Trie croissant</option>
+                <option value="plus">Trie décroissant</option>
+            </select>
+            <input type="submit" value="trier">
+
+        </form>
+
+
+    </nav>
+    <h1 class="card-header">Liste des Abonnement <a href="{{ path('imprimerAbonnements') }}"
+                                                   class="btn btn-info" >Exporter PDF</a></h1>
+    <br>
+    <a href="{{ path('abonnements_new') }}" class="btn btn-dark">Ajouter un abonnement</a>
+    <br><br>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Type</th>
+                <th>Date creation</th>
+                <th>Date expiration</th>
+                <th>Validite</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for abonnement in abonnements %}
+            <tr>
+                <td>{{ abonnement.id }}</td>
+                <td>{{ abonnement.type }}</td>
+                <td>{{ abonnement.datecreation ? abonnement.datecreation|date('Y-m-d') : '' }}</td>
+                <td>{{ abonnement.dateexpiration ? abonnement.dateexpiration|date('Y-m-d') : '' }}</td>
+                <td>{{ abonnement.validite }}</td>
+                <td>
+                    <a href="{{ path('abonnements_show', {'id': abonnement.id}) }}" class="btn btn-succss">Afficher</a>
+                    <a href="{{ path('abonnements_edit', {'id': abonnement.id}) }}" class="btn btn-warning">Modifer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Pas de résultat</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

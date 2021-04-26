@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reclamation index{% endblock %}
+
+{% block body %}
+
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+        <!-- Topbar Search -->
+        <form action="{{ path('searchrec') }}" method="post" onsubmit="return false;"
+              class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input id="recherche" type="text" class="form-control bg-light border-0 small"
+                       placeholder="Search for..."
+                       aria-label="Search" aria-describedby="basic-addon2">
+
+        </div>
+        </form>
+
+        <script type="text/javascript"
+                src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                $("#recherche").keyup(function () {
+                    var minlength = 1;
+                    var that = this;
+                    var value = $(this).val();
+                    var entitySelector = $("#entitiesNav").html('');
+                    if (value.length >= minlength) {
+                        $.ajax({
+                            url: "{{ path('searchrec') }}",
+                            method: "GET",
+                            data: {
+                                'q': value
+                            },
+                            dataType: "text",
+                            success: function (msg) {
+                                if (value === $(that).val()) {
+                                    var result = JSON.parse(msg);
+                                    $.each(result, function (key, arr) {
+                                        $.each(arr, function (id, value) {
+                                            if (key === 'posts') {
+                                                if (id !== 'error') {
+                                                    console.log(value[0])
+                                                    console.log(value[1])
+                                                    entitySelector.append('<a href="/reclamation/' + value[1] + '">' + value[0] + '</a>');
+                                                } else {
+                                                    entitySelector.append('<div class="header-notifications-headline">Aucune résultat trouvé</div>');
+                                                }
+                                            }
+                                        })
+                                    })
+                                }
+                            }
+                        })
+                    }
+                })
+            })
+        </script>
+
+
+        <form method="post" action="{{ path('trier') }}">
+            <select name="trie">
+                <option value="moins">Trie croissant</option>
+                <option value="plus">Trie décroissant</option>
+            </select>
+            <input type="submit" value="trier">
+
+        </form>
+    </nav>
+    <div class="card">
+        <div class="card-body">
+            <ul id="entitiesNav" style="display: grid;">
+                <div>
+                    <a href="#" class="title"><span class="fa arrow"></span> </a>
+                </div>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+    <h1>Reclamation <a href="{{ path('imprimer') }}"
+                       class="btn btn-info" >Exporter PDF</a></h1>
+    <a href="{{ path('reclamation_new') }}" class="btn btn-dark">Crèer une réclamation</a>
+    <br>
+    <br>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Iduser</th>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Datereponse</th>
+            <th>Etat</th>
+            <th>Reponse</th>
+            <th>Datereclamation</th>
+            <th>Satisfaction</th>
+            <th>Détails</th>
+            <th>Répondre</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for reclamation in reclamations %}
+            <tr>
+                <td>{{ reclamation.id }}</td>
+                <td>{{ reclamation.iduser }}</td>
+                <td>{{ reclamation.titre }}</td>
+                <td>{{ reclamation.description }}</td>
+                <td>{{ reclamation.datereponse ? reclamation.datereponse|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ reclamation.etat }}</td>
+                <td>{{ reclamation.reponse }}</td>
+                <td>{{ reclamation.datereclamation ? reclamation.datereclamation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ reclamation.satisfaction }}</td>
+                <td>
+                    <a href="{{ path('reclamation_show', {'id': reclamation.id}) }}" class="btn btn-success">Detail</a>
+                </td>
+                {% if reclamation.etat == "actif" %}
+                <td>
+                    <a href="{{ path('reclamation_edit', {'id': reclamation.id}) }}"
+                       class="btn btn-warning">Répondre</a>
+                </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <!-- Pagination -->
+    <div class="row">
+        <div class="col-md-12 js-filter-pagination">
+            <!-- Pagination -->
+            {{ knp_pagination_render(reclamations) }}
+        </div>
+    </div>
+    </div>
+    <!-- Pagination / End -->
+
+{% endblock %}
