@@ -77,7 +77,30 @@ class ReclamationController extends AbstractController
     }
 
     function filterwords($text){
-        $filterWords = array('fuck','pute','bitch');
+        $delimiter = ',';
+        $enclosure = '"';
+        $header = NULL;
+        $data = array();
+
+        if (($handle = fopen("https://docs.google.com/spreadsheets/d/10P3ihV-l2Hz9Jm1Cprp8S7mTKqYsOZWxzaNOC8ij72M/export?format=csv", 'r')) !== FALSE) {
+
+            while (($row = fgetcsv($handle, 0, $delimiter, $enclosure)) !== FALSE) {
+
+                if(!$header) {
+                    $header = $row;
+                } else {
+                    array_push($data,$row);
+                }
+            }
+            fclose($handle);
+        }
+        #dd($data[300][0]);
+        $filterWords = array('badword');
+        foreach($data as $s)
+        {
+            array_push($filterWords,$s[0]);
+        }
+        #dd($filterWords);
         $filterCount = sizeof($filterWords);
         for ($i = 0; $i < $filterCount; $i++) {
             $text = preg_replace_callback('/\b' . $filterWords[$i] . '\b/i', function($matches){return str_repeat('*', strlen($matches[0]));}, $text);
@@ -279,6 +302,53 @@ class ReclamationController extends AbstractController
         $dompdf->stream("Reclamations.pdf", [
             "Attachment" => true
         ]);
+    }
+
+
+    /**
+     * @Route("/export/stat", name="stat", methods={"GET"})
+     */
+    public function Statistic(ReclamationRepository  $reclamationRepository ,Request $request): Response
+    {
+        $reclamation = $reclamationRepository->findAll();
+        $catType= ['Cloturé', 'En cours']; #, 'Suivi', 'Msg', 'Technical', 'Posts'];
+        $catColor = ['#36CAAB', '#B370CF']; #, '#34495E', '#B370CF', '#AC5353', '#CFD4D8'];
+        $catDone= count($reclamationRepository->findBy(["etat" =>"cloture"]) )  ;
+        $catToDo = count($reclamationRepository->findBy(["etat" =>"actif"]) ) ;
+        #$catSuivi = count($reclamationRepository->findBy(["idCat" => "Suivi"]) ) ;
+        #$catMsg= count($reclamationRepository->findBy(["idCat" =>"Msg"]) )  ;
+        #$catTechnical = count($reclamationRepository->findBy(["idCat" =>"Technical"]) ) ;
+        #$catPosts = count($reclamationRepository->findBy(["idCat" => "Posts"]) ) ;
+        $catCount = [ $catDone, $catToDo]; #,$categSuivi, $categMsg, $categTechnical, $categPosts];
+
+        return $this->render('reclamation/statistics.html.twig',
+            ['catType' => json_encode($catType),
+                'catColor' => json_encode($catColor),
+                'catCount' => json_encode($catCount),
+
+
+            ]);
+        # return $this->render('reclamation/statistics.html.twig');
+    }
+    /**
+     * @Route("/export/stat/satisfaction", name="statSatisfaction", methods={"GET"})
+     */
+    public function satisfactionStatistic(ReclamationRepository  $reclamationRepository ,Request $request): Response
+    {
+
+        $catType= ['Satisfaits', 'non Satisfaits'];
+        $catColor = ['#36CAAB', '#FF0000    '];
+        $catDone= count($reclamationRepository->findBy(["satisfaction" =>"satisfait"]) )  ;
+        $catToDo = count($reclamationRepository->findBy(["satisfaction" =>"non satisfait"]) ) ;
+         $catCount = [ $catDone, $catToDo];
+
+        return $this->render('reclamation/statisticsSatisfaction.html.twig',
+            ['catType' => json_encode($catType),
+                'catColor' => json_encode($catColor),
+                'catCount' => json_encode($catCount),
+
+
+            ]);
     }
 
 

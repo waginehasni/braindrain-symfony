@@ -30,7 +30,30 @@ class UserReclamationController extends AbstractController
     }
 
     function filterwords($text){
-        $filterWords = array('fuck','pute','bitch');
+        $delimiter = ',';
+        $enclosure = '"';
+        $header = NULL;
+        $data = array();
+
+        if (($handle = fopen("https://docs.google.com/spreadsheets/d/10P3ihV-l2Hz9Jm1Cprp8S7mTKqYsOZWxzaNOC8ij72M/export?format=csv", 'r')) !== FALSE) {
+
+            while (($row = fgetcsv($handle, 0, $delimiter, $enclosure)) !== FALSE) {
+
+                if(!$header) {
+                    $header = $row;
+                } else {
+                    array_push($data,$row);
+                }
+            }
+            fclose($handle);
+        }
+        #dd($data[300][0]);
+        $filterWords = array('badword');
+        foreach($data as $s)
+        {
+            array_push($filterWords,$s[0]);
+        }
+        #dd($filterWords);
         $filterCount = sizeof($filterWords);
         for ($i = 0; $i < $filterCount; $i++) {
             $text = preg_replace_callback('/\b' . $filterWords[$i] . '\b/i', function($matches){return str_repeat('*', strlen($matches[0]));}, $text);
