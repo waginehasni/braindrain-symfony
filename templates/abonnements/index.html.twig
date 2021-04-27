@@ -45,7 +45,8 @@
                 <th>Date creation</th>
                 <th>Date expiration</th>
                 <th>Validite</th>
-                <th>actions</th>
+                <th>Consulter</th>
+                <th>Modifier</th>
             </tr>
         </thead>
         <tbody>
@@ -58,6 +59,8 @@
                 <td>{{ abonnement.validite }}</td>
                 <td>
                     <a href="{{ path('abonnements_show', {'id': abonnement.id}) }}" class="btn btn-succss">Afficher</a>
+                </td>
+                <td>
                     <a href="{{ path('abonnements_edit', {'id': abonnement.id}) }}" class="btn btn-warning">Modifer</a>
                 </td>
             </tr>
