@@ -90,8 +90,6 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Iduser</th>
             <th>Titre</th>
             <th>Description</th>
             <th>Datereponse</th>
@@ -101,13 +99,12 @@
             <th>Satisfaction</th>
             <th>Détails</th>
             <th>Répondre</th>
+            <th> Supprimer    </th>
         </tr>
         </thead>
         <tbody>
         {% for reclamation in reclamations %}
             <tr>
-                <td>{{ reclamation.id }}</td>
-                <td>{{ reclamation.iduser }}</td>
                 <td>{{ reclamation.titre }}</td>
                 <td>{{ reclamation.description }}</td>
                 <td>{{ reclamation.datereponse ? reclamation.datereponse|date('Y-m-d H:i:s') : '' }}</td>
@@ -124,6 +121,9 @@
                        class="btn btn-warning">Répondre</a>
                 </td>
                 {% endif %}
+                <td>
+                    {{ include('reclamation/_delete_form.html.twig') }}
+                </td>
             </tr>
         {% else %}
             <tr>

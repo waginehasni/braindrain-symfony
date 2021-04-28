@@ -40,19 +40,18 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Type</th>
                 <th>Date creation</th>
                 <th>Date expiration</th>
                 <th>Validite</th>
                 <th>Consulter</th>
                 <th>Modifier</th>
+                <th>Supprimer</th>
             </tr>
         </thead>
         <tbody>
         {% for abonnement in abonnements %}
             <tr>
-                <td>{{ abonnement.id }}</td>
                 <td>{{ abonnement.type }}</td>
                 <td>{{ abonnement.datecreation ? abonnement.datecreation|date('Y-m-d') : '' }}</td>
                 <td>{{ abonnement.dateexpiration ? abonnement.dateexpiration|date('Y-m-d') : '' }}</td>
@@ -62,6 +61,9 @@
                 </td>
                 <td>
                     <a href="{{ path('abonnements_edit', {'id': abonnement.id}) }}" class="btn btn-warning">Modifer</a>
+                </td>
+                <td>
+                    {{ include('abonnements/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}

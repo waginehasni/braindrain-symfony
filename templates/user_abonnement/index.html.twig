@@ -39,7 +39,6 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Id</th>
             <th>Type</th>
             <th>Date création</th>
             <th>Date expiration</th>
@@ -52,7 +51,6 @@
         <tbody>
         {% for abonnement in abonnements %}
             <tr>
-                <td>{{ abonnement.id }}</td>
                 <td>{{ abonnement.type }}</td>
                 <td>{{ abonnement.datecreation ? abonnement.datecreation|date('Y-m-d') : '' }}</td>
                 <td>{{ abonnement.dateexpiration ? abonnement.dateexpiration|date('Y-m-d') : '' }}</td>
