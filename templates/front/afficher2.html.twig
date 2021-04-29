@@ -1,5 +1,16 @@
-{% extends 'index.html.twig' %}
+{% extends 'front/index.html.twig' %}
 {% block body %}
+    <script>
+        var botmanWidget = {
+            frameEndpoint: '{{ path("chatframe") }}',
+            chatServer: '{{ path("message") }}',
+            title: 'Chatbot',
+            mainColor: '#FF5733',
+            bubbleBackground: '#FF5733',
+            aboutText: ''
+        };
+    </script>
+    <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
 
 
     <div class="card mb-4">
@@ -10,7 +21,7 @@
                     <tr>
                         <th>libelle</th>
                         <th>Type</th>
-                        <th>quantites</th>
+
                         <th>prix</th>
 
                     </tr>
@@ -20,7 +31,7 @@
                             <td>{{ i.libelle }}</td>
 
                             <td>{{ i.type }}</td>
-                            <td>{{ i.quantites }}</td>
+
                             <td>{{ i.prix }}</td>
 
 
@@ -30,8 +41,18 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <!-- Pagination -->
+                <div class="row">
+                    <div class="col-md-12 js-filter-pagination">
+                        <!-- Pagination -->
+                        {{ knp_pagination_render(produits) }}
+                    </div>
+                </div>
+                <!-- Pagination / End -->
+
             </div>
         </div>
     </div>
+
     </center>
 {% endblock %}

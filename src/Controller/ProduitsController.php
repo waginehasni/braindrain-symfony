@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/produits")
@@ -35,10 +36,12 @@ class ProduitsController extends AbstractController
      */
 
 
-    public function index(ProduitRepository $produitRepository): Response
+    public function index(ProduitRepository $produitRepository ,Request $request): Response
     {
+        $produit =$produitRepository->findAll();
+
         return $this->render('produits/index.html.twig', [
-            'produits' => $produitRepository->findAll(),
+            'produits' =>  $produit
         ]);
     }
 
@@ -107,5 +110,32 @@ class ProduitsController extends AbstractController
         }
 
         return $this->redirectToRoute('produits_index');
+    }
+
+    /**
+     * @Route("/export/stat", name="stat", methods={"GET"})
+     */
+    public function Statistic(ProduitRepository $produitRepository ,Request $request): Response
+    {
+        #$produits = $produitRepository->findAll();
+        $catType= ['nutritions', 'materiel','vetements']; #, 'Suivi', 'Msg', 'Technical', 'Posts'];
+        $catColor = ['#36CAAB', '#B370CF','#34495E']; #, '#34495E', '#B370CF', '#AC5353', '#CFD4D8'];
+        $catNut= count($produitRepository->findBy(["type" =>"nutritions"]) )  ;
+        $catMat = count($produitRepository->findBy(["type" =>"materiel"]) ) ;
+        $catVet = count($produitRepository->findBy(["type" =>"vetements"]) ) ;
+
+        #$catSuivi = count($reclamationRepository->findBy(["idCat" => "Suivi"]) ) ;
+        #$catMsg= count($reclamationRepository->findBy(["idCat" =>"Msg"]) )  ;
+        #$catTechnical = count($reclamationRepository->findBy(["idCat" =>"Technical"]) ) ;
+        #$catPosts = count($reclamationRepository->findBy(["idCat" => "Posts"]) ) ;
+        $catCount = [ $catNut, $catMat,$catVet]; #,$categSuivi, $categMsg, $categTechnical, $categPosts];
+
+        return $this->render('produits/statistic.html.twig',
+            ['catType' => json_encode($catType),
+                'catColor' => json_encode($catColor),
+                'catCount' => json_encode($catCount),
+
+
+            ]);
     }
 }

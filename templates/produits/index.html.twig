@@ -5,8 +5,11 @@
 {% block body %}
 
     <h1>Produits index</h1>
+
     <input class="col-10" type="text" name="AfficherClasse" onkeyup="myFunction()" placeholder="Nom (EX:yassine)"id="myInput">
 <a href="{{path('TrierParQ') }}"><i class="align-middle" ></i>  Trier </a>
+<br><br>
+<a href="{{path('stat') }}" class="btn btn-sm btn-dark"><i class="align-middle" ></i>  Voir Statistique </a>
     <table class="table">
     <table class="table" id="mytable">
         <thead>
@@ -40,7 +43,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('produits_new') }}">Create new</a>
+
+
+
+        <a href="{{ path('produits_new') }}">Create new</a>
     <script>
 
 
@@ -64,6 +70,8 @@
                 }
             }
         }
+
+
 
 
     </script>
