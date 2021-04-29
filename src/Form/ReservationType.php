@@ -3,11 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Reservation;
-use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 
 class ReservationType extends AbstractType
 {
@@ -22,7 +21,7 @@ class ReservationType extends AbstractType
             ->add('captcha', CaptchaType::class, array(
                 'width' => 200,
                 'height' => 50,
-                'length' => 6 ))
+                'length' => 6))
         ;
     }
 

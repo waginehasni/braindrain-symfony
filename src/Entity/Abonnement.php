@@ -1,16 +1,14 @@
 <?php
 
 namespace App\Entity;
-use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
-
-
 
 /**
  * Abonnement
  *
- * @ORM\Table(name="Abonnement")
- * @ORM\Entity(repositoryClass="App\Repository\AbonnementRepository")
+ * @ORM\Table(name="abonnement")
+ * @ORM\Entity
  */
 class Abonnement
 {
@@ -24,34 +22,23 @@ class Abonnement
     private $id;
 
     /**
-     * @var string|null
+     * @var string
      *
-     * @ORM\Column(name="type", type="string", length=20, nullable=true)
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 20,
-     *      minMessage = "Type trop court",
-     *      maxMessage = "Type ne doit pas dépasser 20 caractères"
-     * )
-     * @Assert\NotBlank(
-     *     message=" Veuillez donner le type d'abonnement"
-     * )
+     * @ORM\Column(name="type", type="string", length=20, nullable=false)
      */
     private $type;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="dateCreation", type="date", nullable=true)
-     * @Assert\NotNull
+     * @ORM\Column(name="dateCreation", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $datecreation;
+    private $datecreation = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="dateExpiration", type="date", nullable=true)
-     * @Assert\NotNull
+     * @ORM\Column(name="dateExpiration", type="date", nullable=false)
      */
     private $dateexpiration;
 
@@ -59,10 +46,6 @@ class Abonnement
      * @var int|null
      *
      * @ORM\Column(name="validite", type="integer", nullable=true)
-     *  @Assert\Positive(message= "entrez un nombre positif")
-     * @Assert\NotBlank(
-     *     message=" Veuillez donner la validité d'abonnement"
-     * )
      */
     private $validite;
 
@@ -76,7 +59,7 @@ class Abonnement
         return $this->type;
     }
 
-    public function setType(?string $type): self
+    public function setType(string $type): self
     {
         $this->type = $type;
 
@@ -88,7 +71,7 @@ class Abonnement
         return $this->datecreation;
     }
 
-    public function setDatecreation(?\DateTimeInterface $datecreation): self
+    public function setDatecreation(\DateTimeInterface $datecreation): self
     {
         $this->datecreation = $datecreation;
 
@@ -100,7 +83,7 @@ class Abonnement
         return $this->dateexpiration;
     }
 
-    public function setDateexpiration(?\DateTimeInterface $dateexpiration): self
+    public function setDateexpiration(\DateTimeInterface $dateexpiration): self
     {
         $this->dateexpiration = $dateexpiration;
 

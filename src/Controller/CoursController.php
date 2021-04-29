@@ -50,9 +50,9 @@ class CoursController extends AbstractController
         ]);
     }
     /**
-     * @Route("/listp3", name="coursPDF" )
+     * @Route("/listp", name="coursPDF" )
      */
-    public function listp3(CoursRepository $CoursRepository): Response
+    public function listp(CoursRepository $CoursRepository): Response
     {
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
@@ -66,7 +66,7 @@ class CoursController extends AbstractController
 
 
         // Retrieve the HTML generated in our twig file
-        $html = $this->renderView('cours/listp3.html.twig', [
+        $html = $this->renderView('cours/listp.html.twig', [
             'cours' => $cours,
         ]);
 
@@ -88,9 +88,9 @@ class CoursController extends AbstractController
 
 
     /**
-     * @Route("/create3", name="create3")
+     * @Route("/ajout", name="ajout")
      */
-    public function create3(Request $request , \Swift_Mailer $mailer)
+    public function ajout(Request $request , \Swift_Mailer $mailer)
     {
         $cours = new Cours();
         $form = $this->createForm(CoursType::class, $cours);
@@ -120,10 +120,10 @@ class CoursController extends AbstractController
                 'added successfully!'
             );
             $mailer->send($message);
-            return $this->redirectToRoute('read3');
+            return $this->redirectToRoute('read2');
         } else //le cas où les données sont invalides ou ne sont pas soumis
         {
-            return $this->render('cours/create3.html.twig', [
+            return $this->render('cours/ajout.html.twig', [
                 'controller_name' => 'CoursController',
                 'form' => $form->createView() //envoyé vers le twig une vue de notre formulaire
             ]);
@@ -132,22 +132,22 @@ class CoursController extends AbstractController
     }
 
     /**
-     * @Route("/read3", name="read3")
+     * @Route("/read2", name="read2")
      */
-    public function read3()
+    public function read2()
     {
         $listCours = $this->getDoctrine()->getRepository(Cours::class)->findAll();
         //dd($listCours);
-        return $this->render('cours/read3.html.twig', [
+        return $this->render('cours/read2.html.twig', [
             'controller_name' => 'CoursController', 'cours' => $listCours
 
         ]);
     }
 
     /**
-     * @Route("/delete3/{numcours}", name="delete3")
+     * @Route("/delete2/{numcours}", name="delete2")
      */
-    public function delete3($numcours)
+    public function delete2($numcours)
     {
         $Cours = $this->getDoctrine()->
         getRepository(Cours::class)
@@ -156,14 +156,14 @@ class CoursController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($Cours);
         $em->flush();
-        return $this->redirectToRoute('read3');
+        return $this->redirectToRoute('read2');
 
     }
 
     /**
-     * @Route("/update3/{numcours}", name="update3")
+     * @Route("/update2/{numcours}", name="update2")
      */
-    public function update3(Request $request, $numcours)
+    public function update2(Request $request, $numcours)
     {//1ere etape : chercher l'objet à modifier
         $cours = $this->getDoctrine()
             ->getRepository(Cours::class)->find($numcours);
@@ -177,10 +177,10 @@ class CoursController extends AbstractController
         if (($form->isSubmitted()) && ($form->isValid())) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            return $this->redirectToRoute('read3');
+            return $this->redirectToRoute('read2');
         } else //le cas où les données sont invalides oun ne sont pas soumis
         {
-            return $this->render('cours/modify3.html.twig', [
+            return $this->render('cours/modify2.html.twig', [
                 'controller_name' => 'CoursController',
                 'form' => $form->createView() //envoyé vers le twig
             ]);
@@ -197,15 +197,43 @@ class CoursController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Cours::class);
         $cours = $repository->findByPrix();
 
-        return $this->render('cours/read3.html.twig', [
+        return $this->render('cours/read2.html.twig', [
             'cours' => $cours,
         ]);
     }
 
 
 
+    /**
+     * @Route("/Excel", name="Excel")
+     */
+    public function Excel()
+    {
+        $cours = $this->getDoctrine()->getRepository(Cours::class)->findAll();
+        $phpExcelObject = new Spreadsheet();
+
+
+        $phpExcelObject->getActiveSheet()
+            ->setCellValue('A1' , $cours->getNumreservation())
+            ->setCellValue('E1' , $cours->getNomcours())
+            ->setCellValue('F1' , $cours->getNomcoach())
+            ->setCellValue('G1', $cours->getType())
+            ->setCellValue('H1' , $cours->getPrix());
+
+
+
+
+        $writer = new Xlsx( $phpExcelObject);
+
+        // Create a Temporary file in the system
+        $fileName = 'CoursExcel.xlsx';
+        $temp_file = tempnam(sys_get_temp_dir(), $fileName);
+
+        // Create the excel file in the tmp directory of the system
+        $writer->save($temp_file);
+
+        // Return the excel file as an attachment
+        return $this->file($temp_file, $fileName, ResponseHeaderBag::DISPOSITION_INLINE);
+    }
 
 }
-
-
-

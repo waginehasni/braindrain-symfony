@@ -3,15 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-
-
 
 /**
  * Produits
  *
  * @ORM\Table(name="produits")
- * @ORM\Entity(repositoryClass="App\Repository\ProduitRepository")
+ * @ORM\Entity
  */
 class Produits
 {
@@ -40,7 +37,7 @@ class Produits
 
     /**
      * @var int
-     * @Assert\Range(min=10,max=350)
+     *
      * @ORM\Column(name="quantites", type="integer", nullable=false)
      */
     private $quantites;
@@ -104,4 +101,6 @@ class Produits
 
         return $this;
     }
+
+
 }

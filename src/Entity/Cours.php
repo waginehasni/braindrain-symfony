@@ -3,13 +3,12 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Cours
  *
  * @ORM\Table(name="cours")
  * @ORM\Entity(repositoryClass="App\Repository\CoursRepository")
- *
  */
 class Cours
 {
@@ -20,42 +19,42 @@ class Cours
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $numcours;
+    public $numcours;
 
     /**
      * @var int
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="numReservation", type="integer", nullable=false)
      */
-    private $numreservation;
+    public $numreservation;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="nomCours", type="string", length=30, nullable=false)
      */
-    private $nomcours;
+    public $nomcours;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="nomCoach", type="string", length=30, nullable=false)
      */
-    private $nomcoach;
+    public $nomcoach;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="type", type="string", length=30, nullable=false)
      */
-    private $type;
+    public $type;
 
     /**
      * @var int
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="prix", type="integer", nullable=false)
      */
-    private $prix;
+    public $prix;
 
     public function getNumcours(): ?int
     {

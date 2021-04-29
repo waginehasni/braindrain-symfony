@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Reservation
  *
@@ -19,42 +19,42 @@ class Reservation
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $numreservation;
+    public $numreservation;
 
     /**
      * @var int
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="numSalles", type="integer", nullable=false)
      */
-    private $numsalles;
+    public $numsalles;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="specialite", type="string", length=30, nullable=false)
      */
-    private $specialite;
+    public $specialite;
 
     /**
      * @var \DateTime
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="date", type="date", nullable=false)
      */
-    private $date;
+    public $date;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="horraire", type="string", length=30, nullable=false)
      */
-    private $horraire;
+    public $horraire;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="duree", type="string", length=30, nullable=false)
      */
-    private $duree;
+    public $duree;
 
     public function getNumreservation(): ?int
     {

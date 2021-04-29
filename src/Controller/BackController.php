@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Reservation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,6 +19,7 @@ class BackController extends AbstractController
             'controller_name' => 'BackController',
         ]);
     }
+
     /**
      * @Route("/stats", name="statsreservation")
      */
@@ -77,16 +79,6 @@ class BackController extends AbstractController
         return $this->render('reservation/stats.html.twig', array('barchart1' => $bar1, 'barchart2' => $bar2,'barchart3' => $bar3));
     }
 
-    /**
-     *
-     * @Route("accueilback")
-     */
-    public function indexback(): Response
-    {
-        return $this->render('back/index.html.twig', [
-
-        ]);
-    }
 
 
 }
