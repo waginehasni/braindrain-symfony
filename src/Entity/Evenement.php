@@ -2,66 +2,66 @@
 
 namespace App\Entity;
 
+use App\Repository\EvenementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
- * Evenement
- *
- * @ORM\Table(name="evenement")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=EvenementRepository::class)
  */
 class Evenement
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id_evenement", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
     private $idEvenement;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="num_salle", type="integer", nullable=false)
+     * @Assert\NotBlank(message="Veuillez saisir numero de salle")
+     * @ORM\Column(type="integer")
      */
     private $numSalle;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nom_offre", type="string", length=250, nullable=false)
+     * @Assert\NotBlank(message="Veuillez saisir le nom de l'offre")
+     * @ORM\Column(type="string", length=250)
      */
     private $nomOffre;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date_debut", type="date", nullable=false)
+     * @Assert\NotBlank(message="Veuillez saisir la date de debut")
+     * @ORM\Column(type="date")
      */
     private $dateDebut;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date_fin", type="date", nullable=false)
+     * @Assert\NotBlank(message="Veuillez saisir la date de fin")
+     * @ORM\Column(type="date")
      */
     private $dateFin;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="specialite", type="string", length=250, nullable=false)
+     * @Assert\NotBlank(message="Veuillez saisir la spécialité")
+     * @ORM\Column(type="string", length=250)
      */
     private $specialite;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nom", type="string", length=200, nullable=false)
+     * @Assert\NotBlank(message="Veuillez saisir le nom")
+     * @Assert\Length(min=10, max=200, minMessage="Taille minimale (10)", maxMessage="Taille maximale (100) depassé")
+     * @ORM\Column(type="string", length=200)
      */
     private $nom;
+
+    public function __construct()
+    {
+        $this->ratings = new ArrayCollection();
+    }
 
     public function getIdEvenement(): ?int
     {
@@ -139,6 +139,5 @@ class Evenement
 
         return $this;
     }
-
 
 }

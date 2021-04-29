@@ -7,6 +7,7 @@ use App\Form\Abonnement2Type;
 use App\Repository\AbonnementRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,12 +21,19 @@ class UserAbonnementController extends AbstractController
     /**
      * @Route("/", name="user_abonnement_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator,Request $request): Response
     {
         $abonnements = $this->getDoctrine()
             ->getRepository(Abonnement::class)
             ->findAll();
-
+        $abonnements = $paginator->paginate(
+        // Doctrine Query, not results
+            $abonnements,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            5
+        );
         return $this->render('user_abonnement/index.html.twig', [
             'abonnements' => $abonnements,
         ]);

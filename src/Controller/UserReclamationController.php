@@ -98,12 +98,12 @@ class UserReclamationController extends AbstractController
 
 
 
-             }
+                }
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($reclamation);
-            $entityManager->flush();
-            return $this->redirectToRoute('user_reclamation_index');
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($reclamation);
+                $entityManager->flush();
+                return $this->redirectToRoute('user_reclamation_index');
             }
         }
 
@@ -179,4 +179,27 @@ class UserReclamationController extends AbstractController
         return $this->redirectToRoute('user_reclamation_index');
     }
 
+    /**
+     * @Route("/{id}/satisfait", name="reclamation_satisfait", methods={"GET","POST"})
+     */
+    public function clientSatisfait(Request $request, Reclamation $reclamation): Response
+    {
+        $reclamation->setSatisfaction("satisfait");
+        $this->getDoctrine()->getManager()->flush();
+        return $this->render('user_reclamation/show.html.twig', [
+            'reclamation' => $reclamation,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/nonSatisfait", name="reclamation_nonsatisfait", methods={"GET","POST"})
+     */
+    public function clientNonSatisfait(Request $request, Reclamation $reclamation): Response
+    {
+        $reclamation->setSatisfaction("non satisfait");
+        $this->getDoctrine()->getManager()->flush();
+        return $this->render('user_reclamation/show.html.twig', [
+            'reclamation' => $reclamation,
+        ]);
+    }
 }

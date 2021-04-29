@@ -113,7 +113,7 @@ class ProduitsController extends AbstractController
     }
 
     /**
-     * @Route("/export/stat", name="stat", methods={"GET"})
+     * @Route("/export/stat", name="statProduit", methods={"GET"})
      */
     public function Statistic(ProduitRepository $produitRepository ,Request $request): Response
     {

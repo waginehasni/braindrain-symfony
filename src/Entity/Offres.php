@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Offres
  *
  * @ORM\Table(name="offres")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\OffresRepository")
  */
 class Offres
 {
@@ -23,21 +24,33 @@ class Offres
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
+     * @Assert\Type(
+     *     type="string",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
      * @ORM\Column(name="nomOffre", type="string", length=50, nullable=false)
      */
     private $nomoffre;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
+     * @Assert\Type(
+     *     type="string",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
      * @ORM\Column(name="type", type="string", length=50, nullable=false)
      */
     private $type;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
+     * @Assert\Type(
+     *     type="string",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
      * @ORM\Column(name="description", type="string", length=150, nullable=false)
      */
     private $description;

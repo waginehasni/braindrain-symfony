@@ -7,6 +7,7 @@ use App\Form\Abonnement1Type;
 use App\Repository\AbonnementRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,12 +23,19 @@ class AbonnementsController extends AbstractController
     /**
      * @Route("/", name="abonnements_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator,Request $request): Response
     {
         $abonnements = $this->getDoctrine()
             ->getRepository(Abonnement::class)
             ->findAll();
-
+        $abonnements = $paginator->paginate(
+        // Doctrine Query, not results
+            $abonnements,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            5
+        );
         return $this->render('abonnements/index.html.twig', [
             'abonnements' => $abonnements,
         ]);
@@ -105,7 +113,7 @@ class AbonnementsController extends AbstractController
     /**
      * @Route("trierabonnements", name="trierabonnements")
      */
-    public function trierAbonnements(AbonnementRepository $abonnementRepository, Request $request)
+    public function trierAbonnements(PaginatorInterface $paginator,AbonnementRepository $abonnementRepository, Request $request)
     {
         $abonnements = $abonnementRepository->findAll();
         if (isset($_POST['trie'])) {
@@ -116,6 +124,14 @@ class AbonnementsController extends AbstractController
                 $abonnements = $abonnementRepository->TriMax();
             }
         }
+        $abonnements = $paginator->paginate(
+        // Doctrine Query, not results
+            $abonnements,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            5
+        );
         return $this->render('abonnements/index.html.twig',
             [
                 'controller_name' => 'AbonnemmentsController',

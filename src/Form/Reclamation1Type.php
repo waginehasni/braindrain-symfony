@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Reclamation;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 use Symfony\Component\DomCrawler\Field\TextareaFormField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -18,6 +19,7 @@ class Reclamation1Type extends AbstractType
             ->add('titre')
             ->add('description',TextareaType::class)
             ->add('image',FileType::class, ['mapped' => false])
+            ->add('captcha', CaptchaType::class);
         ;
     }
 

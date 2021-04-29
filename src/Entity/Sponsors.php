@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Sponsors
  *
  * @ORM\Table(name="sponsors")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\SponsorsRepository")
  */
 class Sponsors
 {
@@ -19,28 +20,46 @@ class Sponsors
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idsponsor;
+    public $idsponsor;
 
     /**
      * @var string
-     *
+     * * @Assert\NotNull
+     *  @Assert\Type(
+     *     type="string",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
      * @ORM\Column(name="societe", type="string", length=50, nullable=false)
      */
-    private $societe;
+    public $societe;
 
     /**
      * @var float
-     *
+     * * @Assert\NotNull
+     *  @Assert\Type(
+     *     type="float",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
      * @ORM\Column(name="budget", type="float", precision=10, scale=0, nullable=false)
      */
-    private $budget;
+    public $budget;
 
     /**
      * @var int
-     *
+     * * @Assert\NotNull
+     *  @Assert\Type(
+     *     type="integer",
+     *     message="The value {{ value }} is not a valid {{ type }}."
+     * )
+     *  @Assert\Length(
+     *      min = 8,
+     *      max = 8,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     * )
      * @ORM\Column(name="numtelephone", type="integer", nullable=false)
      */
-    private $numtelephone;
+    public $numtelephone;
 
     public function getIdsponsor(): ?int
     {

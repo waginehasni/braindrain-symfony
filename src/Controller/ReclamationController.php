@@ -9,8 +9,8 @@ use App\Form\Reclamation2Type;
 use App\Repository\ReclamationRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,20 +35,11 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/cloture", name="reclamation_index_cloture", methods={"GET"})
      */
-    public function indexCloture(PaginatorInterface $paginator, Request $request): Response
+    public function indexCloture(Request $request): Response
     {
         $reclamations = $this->getDoctrine()
             ->getRepository(Reclamation::class)
             ->findRecByEtat("cloturé");
-
-        $reclamations = $paginator->paginate(
-        // Doctrine Query, not results
-            $reclamations,
-            // Define the page parameter
-            $request->query->getInt('page', 1),
-            // Items per page
-            5
-        );
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamations,
         ]);
@@ -57,20 +48,12 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/", name="reclamation_index", methods={"GET"})
      */
-    public function index(PaginatorInterface $paginator, Request $request): Response
+    public function index(Request $request): Response
     {
         $reclamations = $this->getDoctrine()
             ->getRepository(Reclamation::class)
             ->findRecByEtat("actif");
 
-        $reclamations = $paginator->paginate(
-        // Doctrine Query, not results
-            $reclamations,
-            // Define the page parameter
-            $request->query->getInt('page', 1),
-            // Items per page
-            5
-        );
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamations,
         ]);
@@ -227,7 +210,7 @@ class ReclamationController extends AbstractController
     /**
      * @Route("trier", name="trier")
      */
-    public function trier(ReclamationRepository $reclamationRepository, Request $request,PaginatorInterface $paginator )
+    public function trier(ReclamationRepository $reclamationRepository, Request $request )
     {
         $reclamation = $reclamationRepository->findAll();
         if (isset($_POST['trie'])) {
@@ -238,14 +221,7 @@ class ReclamationController extends AbstractController
                 $reclamation = $reclamationRepository->TriMax();
             }
         }
-        $reclamation = $paginator->paginate(
-        // Doctrine Query, not results
-            $reclamation,
-            // Define the page parameter
-            $request->query->getInt('page', 1),
-            // Items per page
-            5
-        );
+
         return $this->render('reclamation/index.html.twig',
             [
                 'controller_name' => 'ReclamationController',
@@ -340,7 +316,7 @@ class ReclamationController extends AbstractController
         $catColor = ['#36CAAB', '#FF0000    '];
         $catDone= count($reclamationRepository->findBy(["satisfaction" =>"satisfait"]) )  ;
         $catToDo = count($reclamationRepository->findBy(["satisfaction" =>"non satisfait"]) ) ;
-         $catCount = [ $catDone, $catToDo];
+        $catCount = [ $catDone, $catToDo];
 
         return $this->render('reclamation/statisticsSatisfaction.html.twig',
             ['catType' => json_encode($catType),

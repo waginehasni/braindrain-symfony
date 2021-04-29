@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+
+
 
 /**
  * Abonnement
@@ -33,7 +34,7 @@ class Abonnement
      *      maxMessage = "Type ne doit pas dépasser 20 caractères"
      * )
      * @Assert\NotBlank(
-     *     message=" Veuillez donnerle type d'abonnement"
+     *     message=" Veuillez donner le type d'abonnement"
      * )
      */
     private $type;

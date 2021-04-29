@@ -2,34 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\Reservation;
-use Gregwar\CaptchaBundle\Type\CaptchaType;
+use App\Entity\Evenement;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
-class ReservationType extends AbstractType
+class EvenementType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('numsalles')
+            ->add('numSalle')
+            ->add('nomOffre')
+            ->add('dateDebut')
+            ->add('dateFin')
             ->add('specialite')
-            ->add('date')
-            ->add('horraire')
-            ->add('duree')
-            ->add('captcha', CaptchaType::class, array(
-                'width' => 200,
-                'height' => 50,
-                'length' => 6 ))
+            ->add('nom')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Reservation::class,
+            'data_class' => Evenement::class,
         ]);
     }
 }

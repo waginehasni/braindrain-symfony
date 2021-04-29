@@ -47,4 +47,12 @@ class CoursRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findByPrix()
+    {
+        return $this->createQueryBuilder('cours')
+            ->orderBy('cours.prix','ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

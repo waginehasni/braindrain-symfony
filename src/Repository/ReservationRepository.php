@@ -18,6 +18,35 @@ class ReservationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Reservation::class);
     }
+    public function getMonth()
+    {
+
+        $qb = $this->createQueryBuilder('v')
+            ->select('COUNT(v.numreservation) AS post, SUBSTRING(v.date, 1, 7) AS month')
+            ->groupBy('month');
+        return $qb->getQuery()
+            ->getResult();
+    }
+    public function getYear()
+    {
+
+        $qb = $this->createQueryBuilder('v')
+            ->select('COUNT(v.numreservation) AS post, SUBSTRING(v.date, 1, 4) AS year')
+            ->groupBy('year');
+        return $qb->getQuery()
+            ->getResult();
+    }
+    public function getDay()
+    {
+
+        $qb = $this->createQueryBuilder('v')
+            ->select('COUNT(v.numreservation) AS post, SUBSTRING(v.date, 1, 10) AS day')
+            ->groupBy('day');
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+
 
     // /**
     //  * @return Reservation[] Returns an array of Reservation objects
@@ -47,4 +76,5 @@ class ReservationRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }
